@@ -166,6 +166,11 @@ namespace hungaryTDv2
                         damageBar.Width += tempDamage;
                         Canvas.SetLeft(damageBar, 825 - damageBar.Width);
                         enemies.RemoveAt(i);
+                        if (damageBar.Width >= 250)
+                        {
+                            MessageBox.Show("Game Over");
+                            Close();
+                        }
                     }
                 }
                 for (int i = 0; i < towers.Count; i++)
