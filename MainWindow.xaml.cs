@@ -47,7 +47,7 @@ namespace hungaryTDv2
         public StreamReader sr;
         public int tempTowerType;
         public int tempCost;
-        public int money = 1000;
+        public int money = 300;
         public List<Tower> towers = new List<Tower>();
         public int level = 0;
         public int[][] waves = new int[10][];
