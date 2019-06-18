@@ -21,7 +21,7 @@ namespace hungaryTDv2
     public class Tower
     {
         public Point Location;
-        int towerType;
+        public int towerType;
         Rectangle towerRect;
         Rectangle bullet = new Rectangle();
         Polygon hitBox = new Polygon();
@@ -55,7 +55,7 @@ namespace hungaryTDv2
             if (towerType == 0)//norm
             {
                 range = 100;
-                damage = 100;
+                damage = 25;
                 cost = 100;
 
                 bi = new BitmapImage(new Uri("normal.png", UriKind.Relative));
@@ -66,9 +66,9 @@ namespace hungaryTDv2
             }
             else if (towerType == 1)//popo
             {
-                range = 100;
-                damage = 100;
-                cost = 100;
+                range = 300;
+                damage = 50;
+                cost = 300;
 
                 bi = new BitmapImage(new Uri("police.png", UriKind.Relative));
                 towerRect.Fill = new ImageBrush(bi);
@@ -79,8 +79,8 @@ namespace hungaryTDv2
             else if (towerType == 2)//fam
             {
                 range = 100;
-                damage = 100;
-                cost = 100;
+                damage = 25;
+                cost = 600;
 
                 bi = new BitmapImage(new Uri("family.png", UriKind.Relative));
                 towerRect.Fill = new ImageBrush(bi);
@@ -90,8 +90,9 @@ namespace hungaryTDv2
             else//thicc
             {
                 range = 100;
-                damage = 100;
-                cost = 100;
+                damage = 500;
+                cost = 800;
+                bSpeed = 5;
 
                 bi = new BitmapImage(new Uri("tank.png", UriKind.Relative));
                 towerRect.Fill = new ImageBrush(bi);
@@ -117,7 +118,6 @@ namespace hungaryTDv2
                 myPointCollection.Add(point);
             }
             sr.Close();
-            MessageBox.Show(myPointCollection.Count.ToString());
             hitBox.Points = myPointCollection;
             hitBox.Fill = Brushes.Red;
 
