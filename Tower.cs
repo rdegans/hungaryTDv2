@@ -60,7 +60,7 @@ namespace hungaryTDv2
             {
                 range = 100;
                 damage = 25;
-                cost = 100;
+                cost = 150;
 
                 bi = new BitmapImage(new Uri("normal.png", UriKind.Relative));
                 towerRect.Fill = new ImageBrush(bi);
@@ -72,7 +72,7 @@ namespace hungaryTDv2
             {
                 range = 300;
                 damage = 50;
-                cost = 300;
+                cost = 350;
 
                 bi = new BitmapImage(new Uri("police.png", UriKind.Relative));
                 towerRect.Fill = new ImageBrush(bi);
@@ -95,7 +95,7 @@ namespace hungaryTDv2
             {
                 range = 100;
                 damage = 500;
-                cost = 800;
+                cost = 2000;
                 bSpeed = 5;
 
                 bi = new BitmapImage(new Uri("tank.png", UriKind.Relative));

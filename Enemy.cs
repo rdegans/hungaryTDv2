@@ -68,14 +68,14 @@ namespace hungaryTDv2
                 bi = new BitmapImage(new Uri("hamburger.png", UriKind.Relative));
                 speed = 2;
                 health = 5000;
-                damage = 500;
+                damage = 200;
                 reward = 1000;
             }
             else if (type == Type.fries)
             {
                 bi = new BitmapImage(new Uri("fries.png", UriKind.Relative));
                 speed = 10;
-                health = 500;
+                health = 350;
                 damage = 50;
                 reward = 50;
             }

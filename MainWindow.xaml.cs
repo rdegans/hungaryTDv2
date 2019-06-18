@@ -172,6 +172,8 @@ namespace hungaryTDv2
                         for (int i = 0; i < level * level; i++)
                         {
                             enemies.Add(new Enemy(rand.Next(5), cEnemies, cBackground, track, positions));
+                            enemies[i].health += level * 3;
+                            enemies[i].speed += level / 7;
                         }
                         MessageBox.Show("Level " + level);
                     }
@@ -399,13 +401,13 @@ namespace hungaryTDv2
                 {
                     tempRect.Height = 35;
                     tempRect.Width = 35;
-                    tempCost = 100;
+                    tempCost = 150;
                 }
                 else if (tempTowerType == 1)
                 {
                     tempRect.Height = 35;
                     tempRect.Width = 35;
-                    tempCost = 300;
+                    tempCost = 350;
                 }
                 else if (tempTowerType == 2)
                 {
@@ -417,7 +419,7 @@ namespace hungaryTDv2
                 {
                     tempRect.Height = 70;
                     tempRect.Width = 70;
-                    tempCost = 800;
+                    tempCost = 2000;
                 }
                 cBackground.Children.Add(tempRect);
             }
