@@ -39,7 +39,7 @@ namespace hungaryTDv2
             cBackground = cB;
             track = tr;
             positions = p;
-            if (type == Type.apple)
+            if (type == Type.apple)//set values for enemies based on input for enemy type
             {
                 bi = new BitmapImage(new Uri("apple.png", UriKind.Relative));
                 speed = 3;
@@ -79,7 +79,7 @@ namespace hungaryTDv2
                 damage = 50;
                 reward = 50;
             }
-            enemyFill = new ImageBrush(bi);
+            enemyFill = new ImageBrush(bi);//create the enemy sprite
             sprite.Fill = enemyFill;
             sprite.Height = 50;
             sprite.Width = 50;
@@ -112,7 +112,7 @@ namespace hungaryTDv2
                     if (positions[position + i + 9] != -1) //checks if the end of the range + i is vacant
                     {
                         position = position + i - 1;//finds the first vacant position, then goes to that positions - 1
-                        positions[position] = index;
+                        positions[position] = index;//set the new positions and the surrounding positions
                         for (int x = 1; x < 10; x++)
                         {
                             if (position + x < positions.Length)
@@ -126,7 +126,7 @@ namespace hungaryTDv2
                         }
                         break;
                     }
-                    else if (i == speed && positions[position + i] == -1)//exception where the tower gets to its speed and all those positions are empty
+                    else if (i == speed && positions[position + i] == -1)//exception where the enemy gets to its speed and all those positions are empty
                     {
                         position = position + i - 1;
                         positions[position] = index;
@@ -144,140 +144,15 @@ namespace hungaryTDv2
                         break;
                     }
                 }
-                Canvas.SetLeft(sprite, track[position].X - 25);
+                Canvas.SetLeft(sprite, track[position].X - 25);//move the enemy
                 Canvas.SetTop(sprite, track[position].Y - 25);
                 return 0;
             }
             else
             {
                 cEnemies.Children.Remove(sprite);
-                return damage;
+                return damage;//when the enemy gets to the end of the track remove it and deal the damage to the health bar
             }
         }
     }
 }
-/*                        try
-            {
-                sw = new StreamWriter("line1.txt");
-            }
-            catch (FileNotFoundException)
-            {
-                sw = new StreamWriter("line1.txt");
-            }
-            for (int i = 0; i < 175; i+=1)
-            {
-                sw.WriteLine(i + ",275");
-            }
-            for (int i = 275; i > 205; i-=1)
-            {
-                sw.WriteLine("175," + i);
-            }
-            for (int i = 175; i < 315; i += 1)
-            {
-                sw.WriteLine(i + ",205");
-            }
-            for (int i = 205; i < 490; i += 1)
-            {
-                sw.WriteLine("315," + i);
-            }
-            for (int i = 315; i < 525; i += 1)
-            {
-                sw.WriteLine(i + ",490");
-            }
-            for (int i = 490; i > 275; i-=1)
-            {
-                sw.WriteLine("525," + i);
-            }
-            for (int i = 525; i < 675; i += 1)
-            {
-                sw.WriteLine(i + ",275");
-            }
-            for (int i = 275; i < 345; i++)
-            {
-                sw.WriteLine("675," + i);
-            }
-            for (int i = 675; i < 810; i += 1)
-            {
-                sw.WriteLine(i + ",345");
-            }
-            sw.Close();
-*/
-
-
-
-
-/*            /*
-             * track:
-0,240
-140,240
-140,170
-350,170
-350,455
-490,455
-490,240
-700,240
-700,310
-750,310
-750,210
-845,210
-845,380
-820,410
-730,380
-630,380
-630,310
-560,310
-560,525
-280,525
-280,240
-210,240
-210,310
-0,310
-           * menu:
-0,120
-845,120
-845,650
-1125,650
-1125,0
-0,0
-0,120
-            * polyline
-0,275
-175,275
-175,205
-315,205
-315,490
-525,490
-525,275
-675,275
-675,345
-810,345
-        * fork
-2.666666666667,19.333333333333
-6.666666666667,16.666666666667
-6.666666666667,6
-10,3.333333333333
-10,-0.6666666666666
-0.666666666667,0
--0.6666666666666,4.666666666667
-2.666666666667,6.666666666667
-             */
-/*Welcome to the first level! A wave of angry food is coming, spend your money to protect the sacred fridge!
-0,0,0,0,0,0,0,0,0,0
-That wasn't that bad, was it? Well these next enemies ARE that bad, prepare yourself!
-0,0,0,0,1,1,1,1,1
-You're stronger than I thought. Let's see how you handle this next wave
-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-I bet you're wondering what the police tower does. Maybe you should give them a try.
-0,0,0,0,1,1,1,1,2,2
-Hopefully you figured it out, donuts can only be eaten by police.Make sure you're ready for them.
-2,2,2,2,1,1,1,1,1,1,1,1,1,1
-It looked like you almost had a hard time with that last wave.Are you sure you're good enough to do this?
-1,1,1,1,1,2,2,2,2,2,0,0,0,0,0,3
-hAmBuRgEr!?...
-1,1,1,2,2,2,4,4,4,4
-Those fries are pretty speedy, eh? Make sure you have a fast firing tower, so you're sure to hit them.
-3,3,4,4,4,4,4,4
-Here's a real challenge, this wave is massive!(Your computer might not have enough ram for this)
-4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4
-Fast didn't work, maybe slow and steady protects the fridge.
-3,3,3,3,3,3,3,3,3,3*/

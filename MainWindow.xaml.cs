@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * Name: Riley, Peter and Quinn
+ * Date: 
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +27,7 @@ namespace hungaryTDv2
     {
         public Rectangle background;
         public Label lblMouseTest;
-        public Button tempTwrBtn;
+        public Button btnInstruct = new Button();
         public Rectangle tempRect;
         public Rectangle healthBar = new Rectangle();
         public Rectangle damageBar = new Rectangle();
@@ -43,7 +48,6 @@ namespace hungaryTDv2
         public Polygon trackHit = new Polygon();
         public Point[] track = new Point[1450];
         public int[] positions = new int[1450];
-        public StreamWriter sw;
         public StreamReader sr;
         public int tempTowerType;
         public int tempCost;
@@ -53,14 +57,43 @@ namespace hungaryTDv2
         public int[][] waves = new int[10][];
         public string[] levelMessages = new string[10];
         public Random rand = new Random();
+        public Ellipse tempCirc;
         public MainWindow()
         {
             InitializeComponent();
-            btnStart.Height = 20;
-            btnStart.Width = 70;
-            btnStart.Content = "start";
+
+            background = new Rectangle();
+            background.Height = 650;
+            background.Width = 1125;
+            BitmapImage bi = new BitmapImage(new Uri("menu.png", UriKind.Relative));
+            ImageBrush img = new ImageBrush(bi);
+            background.Fill = img;
+            cBackground.Children.Add(background);
+            btnStart.Height = 60;
+            btnStart.Width = 300;
+            btnStart.Content = "Start Game";
+            btnStart.Foreground = Brushes.Gold;
+            btnStart.FontWeight = FontWeights.UltraBold;
+            btnStart.Background = Brushes.DarkGreen;
+            btnStart.FontFamily = new FontFamily("Consola");
+            btnStart.FontSize = 30;
             btnStart.Click += BtnStart_Click;
+            Canvas.SetLeft(btnStart, 412.5);
+            Canvas.SetTop(btnStart, 490);
             cBackground.Children.Add(btnStart);
+
+            btnInstruct.Height = 60;
+            btnInstruct.Width = 300;
+            btnInstruct.Content = "Instructions";
+            btnInstruct.Foreground = Brushes.Gold;
+            btnInstruct.FontWeight = FontWeights.UltraBold;
+            btnInstruct.Background = Brushes.DarkGreen;
+            btnInstruct.FontFamily = new FontFamily("Consola");
+            btnInstruct.FontSize = 30;
+            btnInstruct.Click += BtnInstruct_Click;
+            Canvas.SetLeft(btnInstruct, 412.5);
+            Canvas.SetTop(btnInstruct, 550);
+            cBackground.Children.Add(btnInstruct);
             for (int i = 0; i < positions.Length; i++)
             {
                 positions[i] = -1;
@@ -100,6 +133,7 @@ namespace hungaryTDv2
                 levelMessages[counter] = currentLine;
                 counter++;
             }
+
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)
@@ -108,6 +142,8 @@ namespace hungaryTDv2
             {
                 Canvas.SetTop(tempRect, Mouse.GetPosition(cBackground).Y - tempRect.Height / 2);
                 Canvas.SetLeft(tempRect, Mouse.GetPosition(cBackground).X - tempRect.Width / 2);
+                Canvas.SetTop(tempCirc, Mouse.GetPosition(cBackground).Y - tempCirc.Height / 2);
+                Canvas.SetLeft(tempCirc, Mouse.GetPosition(cBackground).X - tempCirc.Width / 2);
                 bool valid = true;
                 double x = Mouse.GetPosition(cBackground).X;
                 double y = Mouse.GetPosition(cBackground).Y;
@@ -135,6 +171,7 @@ namespace hungaryTDv2
                     {
                         Point temp = Mouse.GetPosition(cBackground);
                         cBackground.Children.Remove(tempRect);
+                        cBackground.Children.Remove(tempCirc);
                         Tower newTower = new Tower(tempTowerType, cBackground, cObstacles, positions, track, temp, cEnemies);
                         towers.Add(newTower);
                         money -= tempCost;
@@ -143,6 +180,7 @@ namespace hungaryTDv2
                     else
                     {
                         cBackground.Children.Remove(tempRect);
+                        cBackground.Children.Remove(tempCirc);
                     }
                     cObstacles.Children.Remove(trackHit);
                     gameState = GameState.play;
@@ -151,9 +189,6 @@ namespace hungaryTDv2
                 {
                     pmbs = Mouse.LeftButton;
                 }
-            }
-            else if (gameState == GameState.test)
-            {
             }
             else if (gameState == GameState.play)
             {
@@ -178,10 +213,6 @@ namespace hungaryTDv2
                         MessageBox.Show("Level " + level);
                     }
                     level++;
-                    /*for (int i = enemies.Count - 1; i > -1; i--)
-                    {
-                        enemies[i].update(i);
-                    }*/
                 }
                 for (int i = 0; i < towers.Count; i++)//loops through each tower
                 {
@@ -239,34 +270,7 @@ namespace hungaryTDv2
                         }
                     }
                 }
-                /*string tempEnemies = "";
-                for (int i = 1; i < positions.Length + 1; i++)
-                {
-                    int index = positions[positions.Length - i];
-                    if (index != -1)
-                    {
-                        if (!tempEnemies.Contains(index.ToString()))
-                        {
-                            tempEnemies += index.ToString();
-                            int tempDamage = enemies[index].update(index);
-                            if (tempDamage > 0)
-                            {
-                                damageBar.Width += tempDamage;
-                                Canvas.SetLeft(damageBar, 825 - damageBar.Width);
-                                enemies.RemoveAt(index);
-                                if (damageBar.Width > 825)
-                                {
-                                    MessageBox.Show("You Lost");
-                                    Close();
-                                }
-                            }
-                        }
-                    }
-                }*/
-
-
             //new check because of bugs, inefficient way to do it, but we couldn't debug what was happening
-
                 for (int i = 0; i < positions.Length; i++)
                 {
                     int index = positions[i];
@@ -311,13 +315,10 @@ namespace hungaryTDv2
             trackHit.Fill = Brushes.Transparent;
 
             cBackground.Children.Remove(btnStart);
-            background = new Rectangle();
-            background.Height = 650;
-            background.Width = 1125;
+            cBackground.Children.Remove(btnInstruct);
             BitmapImage bi = new BitmapImage(new Uri("track.png", UriKind.Relative));
             ImageBrush img = new ImageBrush(bi);
             background.Fill = img;
-            cBackground.Children.Add(background);
 
             bi = new BitmapImage(new Uri("normal.png", UriKind.Relative));
             towerFill[0] = new ImageBrush(bi);
@@ -338,6 +339,36 @@ namespace hungaryTDv2
                 Canvas.SetTop(towerIcons[i], i * 150 + 60);
                 Canvas.SetLeft(towerIcons[i], 910);
                 cBackground.Children.Add(towerIcons[i]);
+                Label towerInfo = new Label();
+                if (i == 0)
+                {
+                    towerInfo.Content = "Cost: 150\n" +
+                    "Range: 100\n" +
+                    "Damage: 25";
+                }
+                else if (i == 1)
+                {
+                    towerInfo.Content = "Cost: 350\n" +
+                    "Range: 300\n" +
+                    "Damage: 50";
+                }
+                else if (i == 2)
+                {
+                    towerInfo.Content = "Cost: 600\n" +
+                    "Range: 80\n" +
+                    "Damage: 10";
+                }
+                else
+                {
+                    towerInfo.Content = "Cost: 2000\n" +
+                    "Range: 100\n" +
+                    "Damage: 500";
+                }
+                towerInfo.FontWeight = FontWeights.Bold;
+                towerInfo.Background = Brushes.SandyBrown;
+                Canvas.SetTop(towerInfo, i * 150 + 70);
+                Canvas.SetLeft(towerInfo, 1020);
+                cBackground.Children.Add(towerInfo);
             }
             gameState = GameState.play;
 
@@ -380,9 +411,17 @@ namespace hungaryTDv2
             lblMoney.Content = "$ " + money;
             cBackground.Children.Add(lblMoney);
         }
-        private void iconsClick(object sender, RoutedEventArgs e)
+        private void BtnInstruct_Click(object sender, RoutedEventArgs e)
         {
-            //sw.Close();
+            MessageBox.Show("The land of Hungary is in trouble, they are under attack from angry food. Luckiliy the citizens of Hungary are very hungry. \n\n" +
+                            "To protect the land you must keep the enemies away from the fridge by buying towers with your money. \n\n" +
+                            "You can get more money by eating food. Then click on a tower and drag to where you want to place it to buy it. \n\n" +
+                            "If a tower appears red when placing you either don't have enough money or it's not allowed to be placed there. \n\n" +
+                            "If you change your mind when buying, just drop the tower anywhere it's red. If you want pause the game, click to buy a tower. \n\n" +
+                            "Information about towers can be found beside them. Information about enemies is for you to find.");
+        }
+            private void iconsClick(object sender, RoutedEventArgs e)
+        {
             if (gameState != GameState.store)
             {
                 gameState = GameState.store;
@@ -397,31 +436,43 @@ namespace hungaryTDv2
                 }
                 tempRect = new Rectangle();
                 tempRect.Fill = towerFill[tempTowerType];
+                tempCirc = new Ellipse();
+                tempCirc.Opacity = 0.5;
+                tempCirc.Fill = Brushes.White;
                 if (tempTowerType == 0)
                 {
                     tempRect.Height = 35;
                     tempRect.Width = 35;
                     tempCost = 150;
+                    tempCirc.Width = 100 * 2 + 1;
+                    tempCirc.Height = 100 * 2 + 1;
                 }
                 else if (tempTowerType == 1)
                 {
                     tempRect.Height = 35;
                     tempRect.Width = 35;
                     tempCost = 350;
+                    tempCirc.Width = 300 * 2 + 1;
+                    tempCirc.Height = 300 * 2 + 1;
                 }
                 else if (tempTowerType == 2)
                 {
                     tempRect.Height = 45;
                     tempRect.Width = 70;
                     tempCost = 600;
+                    tempCirc.Width = 80 * 2 + 1;
+                    tempCirc.Height = 80 * 2 + 1;
                 }
                 else
                 {
                     tempRect.Height = 70;
                     tempRect.Width = 70;
                     tempCost = 2000;
+                    tempCirc.Width = 100 * 2 + 1;
+                    tempCirc.Height = 100 * 2 + 1;
                 }
                 cBackground.Children.Add(tempRect);
+                cBackground.Children.Add(tempCirc);
             }
         }
     }

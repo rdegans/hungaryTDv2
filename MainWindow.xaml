@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hungaryTDv2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="650" Width="1125" MaxHeight="650" MaxWidth="1125">
     <Canvas x:Name="cBackground">
         <Canvas x:Name="cEnemies">
         </Canvas>

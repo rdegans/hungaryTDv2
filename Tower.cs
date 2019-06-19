@@ -33,14 +33,12 @@ namespace hungaryTDv2
         List<int> targets = new List<int>();
         List<Shape> hits = new List<Shape>();
         int range;
-        int cost;
         int bSpeed = 10;
         public int damage;
         public bool shooting = false;
         double xMove;
         double yMove;
         BitmapImage bi;
-        int counter = 0;
         double totalMove;
         Rectangle[] famBullets = new Rectangle[8];
         Polygon[] famHitboxes = new Polygon[8];
@@ -60,7 +58,6 @@ namespace hungaryTDv2
             {
                 range = 100;
                 damage = 25;
-                cost = 150;
 
                 bi = new BitmapImage(new Uri("normal.png", UriKind.Relative));
                 towerRect.Fill = new ImageBrush(bi);
@@ -72,7 +69,6 @@ namespace hungaryTDv2
             {
                 range = 300;
                 damage = 50;
-                cost = 350;
 
                 bi = new BitmapImage(new Uri("police.png", UriKind.Relative));
                 towerRect.Fill = new ImageBrush(bi);
@@ -84,7 +80,6 @@ namespace hungaryTDv2
             {
                 range = 80;
                 damage = 10;
-                cost = 600;
 
                 bi = new BitmapImage(new Uri("family.png", UriKind.Relative));
                 towerRect.Fill = new ImageBrush(bi);
@@ -95,7 +90,6 @@ namespace hungaryTDv2
             {
                 range = 100;
                 damage = 500;
-                cost = 2000;
                 bSpeed = 5;
 
                 bi = new BitmapImage(new Uri("tank.png", UriKind.Relative));
